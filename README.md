@@ -17,7 +17,7 @@
 
 # 📗 Table of Contents
 
-- [My Blog](#my-blog)
+- [Blog App](#blog-app)
 - [📗 Table of Contents](#-table-of-contents)
 - [My Blog ](#my-blog-)
   - [🛠 Built With ](#-built-with-)
@@ -88,7 +88,7 @@ In order to run this project you need:
 Clone this repository to your desired folder:
 
 ```bash
-  git git@github.com:Nessrine88/Blog-App.git
+    https://github.com/ZabihullahNooriWardak/BlogApp.git 
 ```
 
 ### Install
