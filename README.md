@@ -1,4 +1,4 @@
-# My Blog
+# Blog App
 <a name="readme-top"></a>
 <div align="center">
  <h1><b> Welcome To My Ruby On Rails Project! </b></h1>
@@ -159,3 +159,4 @@ Thanks to all <img src="https://assets-global.website-files.com/5dbb30f00775d4c3
 This project is [MIT](./LICENSE) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
