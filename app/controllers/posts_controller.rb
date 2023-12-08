@@ -1,52 +1,55 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[index new create destroy]
+
   def index
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     @posts = @user.posts
   end
 
-  def show
-    @post = User.find(params[:id]).posts.find(params[:post_id])
-  end
+  def show; end
 
   def new
-    @post = Post.new(author: current_user)
-    puts @post.author.name
+    @user = User.find(params[:user_id])
+    @post = @user.posts.build
   end
 
   def create
-    post = Post.new(author: current_user, title: params[:post][:title], text: params[:post][:text])
-    puts "Name: #{post.author.name} Title: #{post.title} Text: #{post.text}"
-    respond_to do |format|
-      format.html do
-        if post.save
-          puts 'Success'
-          flash[:success] = 'Post created successfully'
-          redirect_to "/users/#{current_user.id}/posts"
-        else
-          puts 'error', post.errors.full_messages
-          flash.now[:error] = 'Error: Post could not be created'
-          render :new
-        end
-      end
+    @user = User.find(params[:user_id])
+    @post = @user.posts.build(post_params)
+    if @post.save
+      redirect_to post_path(@post), notice: 'Post was successfully created.'
+    else
+      render :new
     end
   end
 
-  def like
-    @post = Post.find(params[:id])
-    like = Like.new(user: current_user, post: @post)
-    if @post.likes.find_by(user_id: current_user.id)
-      flash[:notice] = 'You already liked this post'
-    elsif like.save
-      flash[:success] = 'You like this post'
+  def edit; end
+
+  def update
+    if @post.update(post_params)
+      redirect_to @post, notice: 'Post was successfully updated.'
+    else
+      render :edit
     end
-    render :show
   end
 
-  def comment
-    @post = Post.find(params[:id])
-    comment = Comment.new(user: current_user, post: @post, text: params[:comment][:text])
-    return unless comment.save
+  def destroy
+    @post.destroy
+    redirect_to user_posts_path(@user), notice: 'Post was successfully destroyed.'
+  end
 
-    redirect_to "/users/#{current_user.id}/posts/#{@post.id}"
+  private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def set_user
+    @user = User.find(params[:user_id])
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :text, :comments_counter, :likes_counter)
   end
 end

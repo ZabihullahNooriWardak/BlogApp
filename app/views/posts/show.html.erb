@@ -1,20 +1,21 @@
-<div class='post-ctr'>
-    <%= render partial: 'partials/post', locals: { post: @post, short: false } %>
-    <%= button_to "Like", "/posts/#{@post.id}/like", remote: true %>
-    <small><%= flash[:notice] %></small>
-    <% if @post.comments.length > 0 %>
-      <div class='comments'>
-        <% @post.comments.each do |comment| %>
-          <%= render partial: 'partials/comment', locals: { comment: comment } %>
-        <% end %>
-      </div>
+<div class="post">
+<ul class="comments2">
+<div class="comments3">
+<h1><%= @post.title %> by <span class="username"><%= @post.author.name %></span></h1>
+ <p class="post-details">Comments: <%= @post.comments.count %>, Likes: <%= @post.likes_counter %></p>
+  </div> 
+ 
+  <p class="post-content2"><%= @post.text %></p>
+</ul>
+  
+  <ul class="comments2">
+  <h2>Comments</h2>
+    <% @post.comments.each do |comment| %>
+      <li>
+        <strong><%= comment.user.name %>:</strong>
+        <p><%= comment.text %></p>
+      </li>
     <% end %>
-    <%= form_with model: Comment.new, url: "/posts/#{@post.id}/comment" do |form| %>
-     <div class="comment-text">
-      <%= form.text_field :text, placeholder: 'Make a comment' %>
-      </div>
-      <div class="submit">
-      <%= form.submit "Submit" %>
-      </div>
-    <% end %>
-  </div>
+  </ul>
+  <%= link_to 'Back', request.referer || root_path %>
+</div>
