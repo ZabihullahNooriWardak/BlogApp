@@ -1,2 +1,21 @@
-<h1><%= @post.title %></h1>
-<p><%= @post.content %></p>
+<div class="post">
+<ul class="comments2">
+<div class="comments3">
+<h1><%= @post.title %> by <span class="username"><%= @post.author.name %></span></h1>
+ <p class="post-details">Comments: <%= @post.comments.count %>, Likes: <%= @post.likes_counter %></p>
+  </div> 
+ 
+  <p class="post-content2"><%= @post.text %></p>
+</ul>
+  
+  <ul class="comments2">
+  <h2>Comments</h2>
+    <% @post.comments.each do |comment| %>
+      <li>
+        <strong><%= comment.user.name %>:</strong>
+        <p><%= comment.text %></p>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to 'Back', request.referer || root_path %>
+</div>

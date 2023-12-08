@@ -8,3 +8,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+third_user = User.create(name: 'Jose', photo: 'https://vivolabs.es/wp-content/uploads/2022/03/perfil-hombre-vivo.png', bio: 'Teacher from Poland.')
+
+https://vivolabs.es/wp-content/uploads/2022/03/perfil-hombre-vivo.png

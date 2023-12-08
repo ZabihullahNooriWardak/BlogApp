@@ -1,2 +1,42 @@
-<h1><%= @user.name %></h1>
-<p>Here will be the information of a specific user.</p>
+<div class="user-profile">
+  <div class="list">
+    <div class="user-image">
+      <% if @user.photo.present? %>
+        <%= image_tag(@user.photo, alt: 'User Image') %>
+      <% else %>
+        <%= image_tag('path_to_default_user_image.jpg', alt: 'User Image') %>
+      <% end %>
+    </div>
+    <div class="user-container">
+      <div class="user-name">
+        <%= @user.name %>
+        <p class="post-count">Number of posts: <%= @user.posts.count %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="user-bio">
+    <h1>Bio</h1>
+    <%= @user.bio %> 
+  </div>
+
+  <% @user.three_most_recent_posts.each do |post| %> 
+    <div class="user-bio">
+      <div class="post-summary">
+        <h3 class="post-title"><%= post.title %></h3>
+        <%= post.text %>
+        <p class="post-count">Number of comments: <%= post.comments.count %></p> 
+        <p class="post-count">Number of likes: <%= post.likes_counter %></p> 
+        <p><%= link_to 'Read Post', post_path(post) %></p> 
+      </div>
+    </div>
+  <% end %>
+
+  <div class="user-all-posts-button">
+    <button class="button">
+      <%= link_to 'See all posts', user_posts_path(@user) %>
+    </button>
+  </div>
+
+  <%= link_to 'Back', request.referer || root_path %>
+</div>

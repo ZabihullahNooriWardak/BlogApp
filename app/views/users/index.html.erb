@@ -1,6 +1,20 @@
-<h1>All Users</h1>
-<ul>
+<h1>Users</h1>
+<ul class="users-list">
   <% @users.each do |user| %>
-    <li><%= user.name %></li>
+    <div class="list">
+      <div class="user-image">
+        <% if user.photo.present? %>
+          <%= image_tag(user.photo, alt: 'User Image') %>
+        <% else %>
+          <%= image_tag('path_to_default_user_image.jpg', alt: 'User Image') %>
+        <% end %>
+      </div>
+      <li class="user-container">
+        <div class="user-info">
+          <h2 class="user-name"><%= link_to user.name, user_path(user) %></h2>
+          <p class="post-count">Number of posts: <%= user.posts.count %></p>
+        </div>
+      </li>
+    </div>
   <% end %>
 </ul>
