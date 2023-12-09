@@ -1,11 +1,7 @@
 <div class="user-profile">
   <div class="list">
     <div class="user-image">
-      <% if @user.photo.present? %>
-        <%= image_tag(@user.photo, alt: 'User Image') %>
-      <% else %>
-        <%= image_tag('path_to_default_user_image.jpg', alt: 'User Image') %>
-      <% end %>
+      <%= image_tag(@user.photo, alt: 'User Image') if @user.photo.present? %>
     </div>
     <div class="user-container">
       <div class="user-name">
@@ -32,6 +28,9 @@
     </div>
   <% end %>
 
+  <div class="create-post-button">
+    <%= link_to 'Create New Post', new_user_post_path(user_id: @user.id) %>
+  </div>
   <div class="user-all-posts-button">
     <button class="button">
       <%= link_to 'See all posts', user_posts_path(@user) %>

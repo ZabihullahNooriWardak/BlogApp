@@ -23,8 +23,8 @@
         <%= link_to post.title, post_path(post) %>
        <p><%= post.text %></p> 
 
-        <p class="post-count">Number of comments: <%= post.comments.count %></p> 
-        <p class="post-count">Number of likes: <%= post.likes_counter %></p> 
+         <p class="post-count">Number of comments: <%= post.comments.count %></p>
+<p class="post-count">Number of likes: <%= post.likes_counter %></p>  
 </li>
         <div class="user-bio">
         
@@ -42,5 +42,5 @@
     <% end %>
   </ul>
 
-  <%= link_to 'Back', request.referer || root_path %>
+  <%= link_to 'Back to Users', users_path, class: "btn btn-secondary" %>
 </div>
