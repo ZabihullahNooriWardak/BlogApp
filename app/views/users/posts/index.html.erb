@@ -1,0 +1,14 @@
+<div class="user-posts">
+  <% @user.posts.each do |post| %>
+    <div class="post-content">
+      <%= post.content %>
+      <div class="post-comments">
+        <% post.comments.each do |comment| %>
+          <div class="comment">
+            <%= comment.content %> 
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

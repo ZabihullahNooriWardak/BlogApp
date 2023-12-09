@@ -1,22 +1,19 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
-  before_action :set_user, only: %i[index new create destroy]
 
-  def index
-    @user = User.find(params[:user_id])
-    @posts = @user.posts
+  def new
+    @user = User.find_by(id: params[:user_id]) || current_user
+
+    @post = @user.posts.build
   end
 
   def show; end
 
-  def new
-    @user = User.find(params[:user_id])
-    @post = @user.posts.build
-  end
-
   def create
-    @user = User.find(params[:user_id])
-    @post = @user.posts.build(post_params)
+    user = User.find_by(id: params[:user_id]) || current_user
+
+    @post = user.posts.build(post_params)
+
     if @post.save
       redirect_to post_path(@post), notice: 'Post was successfully created.'
     else
@@ -36,17 +33,26 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to user_posts_path(@user), notice: 'Post was successfully destroyed.'
+    redirect_to user_posts_path(current_user), notice: 'Post was successfully destroyed.'
+  end
+
+  def index
+    if params[:user_id]
+      @user = User.find_by(id: params[:user_id])
+      @posts = @user ? @user.posts : Post.none
+    else
+      @posts = Post.all
+    end
   end
 
   private
 
   def set_post
-    @post = Post.find(params[:id])
-  end
+    @post = Post.find_by(id: params[:id])
+    return unless @post.nil?
 
-  def set_user
-    @user = User.find(params[:user_id])
+    flash[:alert] = 'Post not found.'
+    redirect_to root_path
   end
 
   def post_params

@@ -1,13 +1,12 @@
 <h1>Users</h1>
+
+<%= link_to 'Create New User', new_user_path, class: 'button new-user-button' %>
+
 <ul class="users-list">
   <% @users.each do |user| %>
     <div class="list">
       <div class="user-image">
-        <% if user.photo.present? %>
-          <%= image_tag(user.photo, alt: 'User Image') %>
-        <% else %>
-          <%= image_tag('path_to_default_user_image.jpg', alt: 'User Image') %>
-        <% end %>
+        <%= image_tag(user.photo, alt: 'User Image') if user.photo.present? %>
       </div>
       <li class="user-container">
         <div class="user-info">
