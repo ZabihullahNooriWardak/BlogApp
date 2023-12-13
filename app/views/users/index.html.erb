@@ -1,19 +1,4 @@
-<h1>Users</h1>
+<% @users.each do |user| %>
+  <%= render partial: 'partials/user_card', locals: { user: user } %>
+<% end %>
 
-<%= link_to 'Create New User', new_user_path, class: 'button new-user-button' %>
-
-<ul class="users-list">
-  <% @users.each do |user| %>
-    <div class="list">
-      <div class="user-image">
-        <%= image_tag(user.photo, alt: 'User Image') if user.photo.present? %>
-      </div>
-      <li class="user-container">
-        <div class="user-info">
-          <h2 class="user-name"><%= link_to user.name, user_path(user) %></h2>
-          <p class="post-count">Number of posts: <%= user.posts.count %></p>
-        </div>
-      </li>
-    </div>
-  <% end %>
-</ul>
