@@ -1,8 +1,7 @@
-# spec/features/user_show_spec.rb
 
 require 'rails_helper'
 
-RSpec.describe 'UserShow', type: :feature do
+RSpec.describe 'UsersShow', type: :feature do
   before do
     @user = User.create!(name: 'User', email: 'user@example.com', bio: 'This is a user bio.', photo: 'https://vivolabs.es/wp-content/uploads/2022/03/perfil-hombre-vivo.png')
 
