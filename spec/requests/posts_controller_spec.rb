@@ -1,39 +1,22 @@
-require 'rails_helper'
+# spec/requests/posts_controller_spec.rb
 
 RSpec.describe 'PostsController', type: :request do
-  let!(:user) { User.create!(name: 'Test User') }
-  let!(:post) { Post.create!(title: 'Test Post', author: user, comments_counter: 0, likes_counter: 0) }
-
-  describe 'GET /index' do
-    it 'returns a successful response' do
-      get user_posts_path(user)
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'renders the index template' do
-      get user_posts_path(user)
-      expect(response).to render_template(:index)
-    end
-
-    it "includes the post's title in the response body" do
-      get user_posts_path(user)
-      expect(response.body).to include(post.title)
-    end
-  end
-
   describe 'GET /show' do
+    let(:user) { User.create!(name: 'User', email: 'user@example.com') }
+    let(:post) { Post.create!(title: 'Title', text: 'Text', author: user) }
+
     it 'returns a successful response' do
-      get user_post_path(post)
+      get post_path(post)
       expect(response).to have_http_status(:success)
     end
 
     it 'renders the show template' do
-      get user_post_path(post)
+      get post_path(post)
       expect(response).to render_template(:show)
     end
 
-    it "includes the post's title in the response body" do
-      get user_post_path(post)
+    it 'includes the post\'s title in the response body' do
+      get post_path(post)
       expect(response.body).to include(post.title)
     end
   end

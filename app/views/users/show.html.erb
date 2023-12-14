@@ -6,7 +6,7 @@
     <div class="user-container">
       <div class="user-name">
         <%= @user.name %>
-        <p class="post-count">Number of posts: <%= @user.posts.count %></p>
+        <p class="post-count">Number of posts: <%= @user.posts_counter %></p>
       </div>
     </div>
   </div>
@@ -32,9 +32,9 @@
     <%= link_to 'Create New Post', new_user_post_path(user_id: @user.id) %>
   </div>
   <div class="user-all-posts-button">
-    <button class="button">
-      <%= link_to 'See all posts', user_posts_path(@user) %>
-    </button>
+    <div class="user-all-posts-button">
+  <%= link_to 'See all posts', user_posts_path(@user), id: 'all-posts-link' %>
+</div>
   </div>
 
   <%= link_to 'Back', request.referer || root_path %>
