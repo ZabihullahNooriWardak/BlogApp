@@ -7,10 +7,11 @@ AllCops:
     - "Guardfile"
     - "Rakefile"
     - "node_modules/**/*"
+
   DisplayCopNames: true
 
 Layout/LineLength:
-  Max: 130
+  Max: 120
 Metrics/MethodLength:
   Include:
     - "app/controllers/*"
@@ -56,8 +57,4 @@ Style/HashEachMethods:
 Style/HashTransformKeys:
   Enabled: false
 Style/HashTransformValues:
-  Enabled: false
-
-
-Layout/EndOfLine:
   Enabled: false
