@@ -2,10 +2,6 @@ source 'https://rubygems.org'
 
 ruby '3.2.2'
 
-gem 'rubocop', '>= 1.0', '< 2.0'
-
-gem 'figaro'
-
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.1.1'
 
@@ -17,6 +13,8 @@ gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
+
+gem 'uri'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
@@ -44,6 +42,8 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
+gem 'kaminari'
+gem 'rubocop', '>= 1.0', '< 2.0'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -51,14 +51,7 @@ gem 'bootsnap', require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
-  gem 'factory_bot_rails', '~> 6.2'
-  gem 'rspec-rails'
-
-  gem 'faker'
-  # Capybara, the library that allows us to interact with the browser using Ruby
-  gem 'capybara'
-
-  gem 'selenium-webdriver'
+  gem 'rspec-rails', '~> 5.0'
 end
 
 group :development do
@@ -70,4 +63,12 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+end
+
+group :test do
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem 'capybara'
+  gem 'rails-controller-testing'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end

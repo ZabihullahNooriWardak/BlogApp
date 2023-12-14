@@ -1,29 +1,61 @@
 class PostsController < ApplicationController
-  def index
-    @user = User.includes(posts: :comments).find(params[:id])
-    @posts = @user.posts
-  end
-
-  def show
-    @post = Post.includes(:comments).find(params[:post_id])
-  end
+  before_action :set_post, only: %i[show edit update destroy]
 
   def new
-    @post = Post.new
+    @user = User.find_by(id: params[:user_id]) || current_user
+
+    @post = @user.posts.build
   end
 
+  def show; end
+
   def create
-    @post = current_user.posts.build(post_params)
+    user = User.find_by(id: params[:user_id]) || current_user
+
+    @post = user.posts.build(post_params)
+
     if @post.save
-      redirect_to post_path(@user, @post)
+      redirect_to post_path(@post), notice: 'Post was successfully created.'
     else
-      render 'new'
+      render :new
+    end
+  end
+
+  def edit; end
+
+  def update
+    if @post.update(post_params)
+      redirect_to @post, notice: 'Post was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @post.destroy
+    redirect_to user_posts_path(current_user), notice: 'Post was successfully destroyed.'
+  end
+
+  def index
+    if params[:user_id]
+      @user = User.find_by(id: params[:user_id])
+      @posts = @user ? @user.posts.includes(:comments).order('comments.created_at DESC').page(params[:page]).per(5) : Post.none
+    else
+      @posts = Post.all.includes(:comments).order('comments.created_at DESC').page(params[:page]).per(5)
     end
   end
 
   private
 
+  def set_post
+    @post = Post.find_by(id: params[:id])
+    return unless @post.nil?
+
+    flash[:alert] = 'Post not found.'
+    redirect_to root_path
+  end
+
   def post_params
-    params.require(:post).permit(:title, :description)
+    params.require(:post).permit(:title, :text, :comments_counter, :likes_counter)
   end
 end

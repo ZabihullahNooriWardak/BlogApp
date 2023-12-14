@@ -1,17 +1,15 @@
 Rails.application.routes.draw do
-  # Other routes...
+  get "up" => "rails/health#show", as: :rails_health_check
 
-  get '/', to: 'users#index'
-  get "/users", to: "users#index"
-  get "/users/:id", to: "users#show"
-  get "/users/:id/posts", to: "posts#index"
-  get "/users/:id/posts/:post_id", to: "posts#show"
-  get '/posts/new', to: 'posts#new'
- # config/routes.rb
-resources :posts do
-  resources :comments, only: [:new, :create]
-  post 'likes', to: 'likes#create'
-end
+  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy], shallow: true do
+      resources :comments, only: [:new, :create]
+    end
+  end
 
-  
+  resources :posts, only: [] do
+    resources :likes, only: [:create]
+  end
+
+  root 'users#index'
 end

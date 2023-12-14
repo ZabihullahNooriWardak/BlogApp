@@ -1,13 +1,21 @@
-# app/controllers/likes_controller.rb
 class LikesController < ApplicationController
+  before_action :set_post
+
   def create
-    @post = Post.find(params[:post_id])
-    like = Like.new(user: current_user, post: @post)
-    if @post.likes.find_by(user_id: current_user.id)
-      flash[:notice] = 'You already liked this post'
-    elsif like.save
-      flash[:success] = 'You liked this post'
+    if @post.increment!(:likes_counter)
+      redirect_to @post, notice: 'You liked the post!'
+    else
+      redirect_to root_path, alert: 'Unable to like the post.'
     end
-    redirect_to post_path(@post)
+  end
+
+  private
+
+  def set_post
+    @post = Post.find_by(id: params[:post_id])
+    return if @post.present?
+
+    flash[:alert] = 'Post not found.'
+    redirect_to root_path
   end
 end
