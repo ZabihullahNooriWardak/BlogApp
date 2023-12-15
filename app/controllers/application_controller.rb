@@ -1,14 +1,9 @@
 class ApplicationController < ActionController::Base
-  before_action :set_referer
-  helper_method :current_user
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
-  private
+  protected
 
-  def set_referer
-    session[:return_to] = request.referer if request.url != request.referer
-  end
-
-  def current_user
-    @current_user ||= User.first
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
   end
 end
